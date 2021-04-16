@@ -25,9 +25,9 @@
             
             $sql = "UPDATE tm_producto 
                     SET 
-                        est = 0
-                        fetc_elim = now();//'now()'Traer la fecha actual del sistema
-                    WHERE prod_id = ?";
+                        est = 0,
+                        fech_elim = now()
+                    WHERE prod_id = ?";//'now()'Traer la fecha actual del sistema
 
             $sql = $conectar -> prepare($sql);
             $sql -> bindValue(1, $prod_id);
@@ -43,7 +43,7 @@
                     VALUES (NULL, ?, now(), NULL, NULL, 1)";
 
             $sql = $conectar -> prepare($sql);
-            $sql -> bindValue(1, $prod_id);
+            $sql->bindValue(1, $prod_nom);
             $sql -> execute();
             return $resultado = $sql -> fetchAll(); 
         

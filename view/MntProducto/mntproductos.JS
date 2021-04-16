@@ -1,7 +1,9 @@
 var tabla;
 
 function init(){
-
+$("#producto_form").on("submit", function(e){
+    guardaryeditar(e);
+});
 }
 
 $(document).ready(function(){
@@ -53,5 +55,63 @@ $(document).ready(function(){
             }
         }
     }).DataTable();
+});
+
+function guardaryeditar(e){
+    e.preventDefault();
+    let formData = new FormData($("#producto_form")[0]);
+    $.ajax({
+        url: "../../controller/producto.php?op=guardaryeditar",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(datos){
+            console.log(datos);
+            $("#producto_form")[0].reset();
+            $("#modalmantenimiento").modal('hide');
+            $("#producto_data").DataTable().ajax.reload();
+
+            swal.fire(
+                "¡Registro!",
+                "Registro exitoso",
+                "success"
+            );
+        }
+    })
+}
+
+function editar(prod_id){
+    console.log(prod_id);
+}
+function eliminar(prod_id){
+    swal.fire({//codigo de libreria sweetAlert2
+        title: "CRUD",
+        text: "Esta seguro de Eliminar el registro",
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        reverseButtons: true
+    }).then((result) => {
+        if(result.isConfirmed){ 
+            
+            $.post("../../controller/producto.php?op=eliminar",{prod_id:prod_id}, function(data){
+
+            });
+            $('#producto_data').DataTable().ajax.reload();
+
+            swal.fire(
+                'Eliminado',
+                'El producto se elimino correctamente',
+                'success'
+            )
+        }
+    })
+}
+
+$(document).on('click','#btnnuevo',function(){
+    $('#modalmantenimiento').modal('show');
+    $('#mdltitle').html("Nuevo Registro");
 });
 init();
