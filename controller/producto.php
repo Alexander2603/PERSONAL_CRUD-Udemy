@@ -40,6 +40,7 @@
                     $output["prod_id"] = $row["prod_id"];
                     $output["prod_nom"] = $row["prod_nom"];
                 }
+                echo json_encode($output);
             }
             break;
         case "eliminar":

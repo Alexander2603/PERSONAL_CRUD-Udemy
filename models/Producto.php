@@ -55,8 +55,8 @@
             $sql = "UPDATE tm_producto 
             SET 
                 prod_nom=?,
-                fetc_modi= now();//'now()'Traer la fecha actual del sistema
-            WHERE prod_id = ?";;
+                fech_modi= now()
+            WHERE prod_id = ?";//'now()'Traer la fecha actual del sistema
 
             $sql = $conectar -> prepare($sql);
             $sql -> bindValue(1, $prod_nom);
